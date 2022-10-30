@@ -1,8 +1,7 @@
 <section id='settings'
 class="transition ease-in-out duration-500 translate-x-full absolute right-0 h-screen flex flex-col items-start p-4 bg-dark-grey w-1/3">
 
-    <button
-    onclick="this.parentElement.classList.replace('translate-x-0', 'translate-x-full');">
+    <button id="close-button">
         <i class="fa-solid fa-2xl fa-xmark"></i>
     </button>
 
@@ -13,9 +12,9 @@ class="transition ease-in-out duration-500 translate-x-full absolute right-0 h-s
     <ul class="flex justify-between p-2">
         <li class="flex items-center">
             Level :
-            <span id="level-value"></span>
+            <span class="level"></span>
             <div class="ml-2 h-4 w-24 bg-grey">
-                <div class="h-full w-1/2 bg-light-grey"></div>
+                <div class="level-progression h-full bg-light-grey"></div>
             </div>
         </li>
 
@@ -24,9 +23,7 @@ class="transition ease-in-out duration-500 translate-x-full absolute right-0 h-s
         </li>
 
         <li>
-            <button
-            class="hover:underline"
-            onclick="document.getElementById('settings').classList.replace('translate-x-full', 'translate-x-0');">
+            <button id="open-button" class="hover:underline">
             Game settings
             </button>
         </li>

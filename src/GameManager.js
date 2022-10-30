@@ -1,24 +1,26 @@
 class GameManager {
-  static getGameData = async () => {
-    return fetch("../game-data.json").then((response) => response.json());
-  };
-
   static getPlayerPoints() {
     if (!localStorage.getItem("playerPoints")) {
-      localStorage.setItem("playerPoints", "0");
+      localStorage.setItem("playerPoints", "300");
     }
     return localStorage.getItem("playerPoints");
   }
 
-  static getPlayerLevel() {
-    let level = 1;
-    GameManager.getGameData().then((data) => {
-      for (const playerLevel of data.playerLevels) {
-        if (GameManager.getPlayerPoints() >= playerLevel.points) {
-          level = playerLevel.id;
-        }
+  static getLevelPoints(level) {
+    for (const gameDataLevel of gameData.levels) {
+      if (gameDataLevel.id === level) {
+        return gameDataLevel.points;
       }
-    });
-    return level;
+    }
+  }
+
+  static getPlayerLevel() {
+    let playerLevel = 1;
+    for (const gameDataLevel of gameData.levels) {
+      if (GameManager.getPlayerPoints() >= gameDataLevel.points) {
+        playerLevel = gameDataLevel.id;
+      }
+    }
+    return playerLevel;
   }
 }

@@ -1,12 +1,32 @@
 "use strict";
 
-// afficher le niveau et la jauge de progession
-window.onload = () => {
-  const levelValues = document.querySelector("#level-value");
-  const playerPoints = GameManager.getPlayerPoints();
+// afficher et cacher les paramètres de jeu
+const openButton = document.querySelector("#open-button");
+const closeButton = document.querySelector("#close-button");
+const settingsSection = document.querySelector("#settings");
 
-  // afficher le niveau
-  const playerLevel = GameManager.getPlayerLevel();
-
-  console.log(levelValues);
+openButton.onclick = () => {
+  settingsSection.classList.replace("translate-x-full", "translate-x-0");
 };
+closeButton.onclick = () => {
+  settingsSection.classList.replace("translate-x-0", "translate-x-full");
+};
+
+// afficher le niveau du joueur et sa progression dans le niveau
+const levelSpans = document.querySelectorAll(".level");
+const levelProgressionDivs = document.querySelectorAll(".level-progression");
+
+const playerLevel = GameManager.getPlayerLevel();
+const playerPoints = GameManager.getPlayerPoints();
+const currentLevelPoints = GameManager.getLevelPoints(playerLevel);
+const nextLevelPoints = GameManager.getLevelPoints(playerLevel + 1);
+const progressValue =
+  (100 * (playerPoints - currentLevelPoints)) / nextLevelPoints;
+
+levelSpans.forEach((element) => {
+  element.innerHTML = playerLevel;
+});
+
+levelProgressionDivs.forEach((element) => {
+  element.style.width = progressValue + "%";
+});

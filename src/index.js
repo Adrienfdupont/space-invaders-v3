@@ -31,3 +31,7 @@ levelSpans.forEach((element) => {
 levelProgressionDivs.forEach((element) => {
   element.style.width = progressValue + "%";
 });
+
+// afficher les cartes cliquables d'aliens dans les paramètres
+const alienCardContainer = document.querySelector("#alien-card-container");
+console.log(alienCardContainer);

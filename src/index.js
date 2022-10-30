@@ -21,7 +21,8 @@ const playerPoints = GameManager.getPlayerPoints();
 const currentLevelPoints = GameManager.getLevelPoints(playerLevel);
 const nextLevelPoints = GameManager.getLevelPoints(playerLevel + 1);
 const progressValue =
-  (100 * (playerPoints - currentLevelPoints)) / nextLevelPoints;
+  (100 * (playerPoints - currentLevelPoints)) /
+  (nextLevelPoints - currentLevelPoints);
 
 levelSpans.forEach((element) => {
   element.innerHTML = playerLevel;

@@ -136,35 +136,35 @@ const gameData = {
   ships: [
     {
       id: 1,
-      imagePath: "../public/images/ship-lv1.png",
+      imagePath: "../public/images/ships/ship-lv1.png",
       reload: 2000,
       levelId: 2,
     },
 
     {
       id: 2,
-      imagePath: "../public/images/ship-lv2.png",
+      imagePath: "../public/images/ships/ship-lv2.png",
       reload: 1800,
       levelId: 4,
     },
 
     {
       id: 3,
-      imagePath: "../public/images/ship-lv3.png",
+      imagePath: "../public/images/ships/ship-lv3.png",
       reload: 1600,
       levelId: 6,
     },
 
     {
       id: 4,
-      imagePath: "../public/images/ship-lv4.png",
+      imagePath: "../public/images/ships/ship-lv4.png",
       reload: 1400,
       levelId: 8,
     },
 
     {
       id: 5,
-      imagePath: "../public/images/ship-lv5.png",
+      imagePath: "../public/images/ships/ship-lv5.png",
       reload: 1200,
       levelId: 10,
     },

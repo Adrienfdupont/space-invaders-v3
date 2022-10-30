@@ -1,7 +1,7 @@
 class GameManager {
   static getPlayerPoints() {
     if (!localStorage.getItem("playerPoints")) {
-      localStorage.setItem("playerPoints", "300");
+      localStorage.setItem("playerPoints", "0");
     }
     return localStorage.getItem("playerPoints");
   }

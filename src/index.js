@@ -1,5 +1,12 @@
-async function getGameData() {
-  return fetch("../game-data.json").then((response) => response.json());
-}
+"use strict";
 
-getGameData().then((json) => console.log(json));
+// afficher le niveau et la jauge de progession
+window.onload = () => {
+  const levelValues = document.querySelector("#level-value");
+  const playerPoints = GameManager.getPlayerPoints();
+
+  // afficher le niveau
+  const playerLevel = GameManager.getPlayerLevel();
+
+  console.log(levelValues);
+};

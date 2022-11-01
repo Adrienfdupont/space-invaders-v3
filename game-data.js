@@ -57,6 +57,7 @@ const gameData = {
       speed: 1,
       reload: 20000,
       reward: 10,
+      imagePath: "../public/images/alien.png",
       levelId: 1,
     },
 
@@ -65,6 +66,7 @@ const gameData = {
       speed: 1.1,
       reload: 19000,
       reward: 12,
+      imagePath: "../public/images/alien.png",
       levelId: 2,
     },
 
@@ -73,6 +75,7 @@ const gameData = {
       speed: 1.2,
       reload: 18000,
       reward: 15,
+      imagePath: "../public/images/alien.png",
       levelId: 3,
     },
 
@@ -81,6 +84,7 @@ const gameData = {
       speed: 1.3,
       reload: 17000,
       reward: 19,
+      imagePath: "../public/images/alien.png",
       levelId: 4,
     },
 
@@ -89,6 +93,7 @@ const gameData = {
       speed: 1.4,
       reload: 16000,
       reward: 24,
+      imagePath: "../public/images/alien.png",
       levelId: 5,
     },
 
@@ -97,6 +102,7 @@ const gameData = {
       speed: 1.5,
       reload: 15000,
       reward: 29,
+      imagePath: "../public/images/alien.png",
       levelId: 6,
     },
 
@@ -105,6 +111,7 @@ const gameData = {
       speed: 1.6,
       reload: 14000,
       reward: 36,
+      imagePath: "../public/images/alien.png",
       levelId: 7,
     },
 
@@ -113,6 +120,7 @@ const gameData = {
       speed: 1.7,
       reload: 13000,
       reward: 43,
+      imagePath: "../public/images/alien.png",
       levelId: 8,
     },
 
@@ -121,6 +129,7 @@ const gameData = {
       speed: 1.8,
       reload: 12000,
       reward: 52,
+      imagePath: "../public/images/alien.png",
       levelId: 9,
     },
 
@@ -129,6 +138,7 @@ const gameData = {
       speed: 1.9,
       reload: 11000,
       reward: 65,
+      imagePath: "../public/images/alien.png",
       levelId: 10,
     },
   ],

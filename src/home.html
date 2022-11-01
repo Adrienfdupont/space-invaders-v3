@@ -1,48 +1,66 @@
-<div id='settings'
-class="z-20 transition ease-in-out duration-500 translate-x-full absolute left-0 h-screen flex flex-col items-start py-4 pl-4 bg-dark-grey w-1/3">
+<div id="bg" class="bg-cover h-screen text-alien-green overflow-hidden">
 
-    <button id="close-button">
-        <i class="material-icons text-3xl">close</i>
-    </button>
+    <div id='settings'
+    class="z-20 transition ease-in-out duration-500 translate-x-full absolute right-0 h-screen items-start py-4 pl-4 bg-dark-grey w-1/3">
 
-    <div class="mt-4 text-xl">Difficulty</div>
+        <button id="close-button">
+            <i class="material-icons text-3xl">close</i>
+        </button>
 
-    <section class="mt-4 w-full">
-        <span>Aliens</span>
-        <div class="overflow-x-scroll w-full">
-            <div id="alien-card-container" class="flex"></div>
-        </div>       
-    </section>
+        <div class="mt-6 text-xl">Difficulty</div>
 
-    <section class="mt-4 w-full">
-        <span>Ship</span>
-        <div class="overflow-x-scroll w-full">
-            <div id="ship-card-container" class="flex"></div>
-        </div>       
-    </section>
+        <section class="mt-2 w-full">
+            <div class="overflow-x-scroll w-full">
+                <div id="alien-card-container" class="flex"></div>
+            </div>       
+        </section>
+
+        <div class="mt-6 text-xl">Equipment</div>
+
+        <section class="mt-2 w-full">
+            <div class="overflow-x-scroll w-full">
+                <div id="ship-card-container" class="flex"></div>
+            </div>       
+        </section>
+
+        <section class="mt-4 w-full">
+            <div class="overflow-x-scroll w-full">
+                <div id="missile-card-container" class="flex"></div>
+            </div>       
+        </section>
+
+        <div class="mt-6 text-xl">Battlefield</div>
+
+        <section class="mt-2 w-full">
+            <div class="overflow-x-scroll w-full">
+                <div id="bg-card-container" class="flex"></div>
+            </div>       
+        </section>
+
+    </div>
+
+    <header class="p-2">
+
+        <ul>
+            <li class="absolute left-4 flex items-center">
+                <span class="level"></span>
+                <div class="ml-2 h-4 w-24 bg-grey">
+                    <div class="level-progression h-full bg-light-grey"></div>
+                </div>
+            </li>
+
+            <li>
+                <h1 class="absolute left-1/2 -translate-x-1/2 text-4xl cursor-pointer">Space Invaders</h1>
+            </li>
+
+            <li class="absolute right-4">
+                <button id="open-button" class="hover:underline">
+                Game settings
+                </button>
+            </li>
+        </ul>
+
+    </header>
 
 </div>
-
-<header class="p-2">
-
-    <ul>
-        <li class="absolute left-4 flex items-center">
-            <span class="level"></span>
-            <div class="ml-2 h-4 w-24 bg-grey">
-                <div class="level-progression h-full bg-light-grey"></div>
-            </div>
-        </li>
-
-        <li>
-            <h1 class="absolute left-1/2 -translate-x-1/2 text-4xl cursor-pointer">Space Invaders</h1>
-        </li>
-
-        <li class="absolute right-4">
-            <button id="open-button" class="hover:underline">
-            Game settings
-            </button>
-        </li>
-    </ul>
-
-</header>
 

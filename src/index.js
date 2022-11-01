@@ -1,10 +1,13 @@
 "use strict";
 
-// inscrire le joueur s'il n'a pas encore joué
+// ----------------------- inscrire le joueur s'il n'a pas encore joué -------------------------------
 registerPlayer();
-localStorage.setItem("playerPoints", "500");
 
-// afficher et cacher les paramètres de jeu
+// ------------------------------------ afficher le décor --------------------------------------------
+
+updateBackground();
+
+// --------------------------- afficher et cacher les paramètres de jeu -------------------------------
 
 const openButton = document.querySelector("#open-button");
 const closeButton = document.querySelector("#close-button");
@@ -17,7 +20,7 @@ closeButton.onclick = () => {
   settingsDiv.classList.replace("translate-x-0", "translate-x-full");
 };
 
-// afficher le niveau du joueur et sa progression dans le niveau
+// ---------------- afficher le niveau du joueur et sa progression dans le niveau ---------------------
 
 const levelSpans = document.querySelectorAll(".level");
 const levelProgressionDivs = document.querySelectorAll(".level-progression");
@@ -38,10 +41,19 @@ levelProgressionDivs.forEach((element) => {
   element.style.width = progressValue + "%";
 });
 
-// afficher les cartes cliquables d'aliens dans les paramètres
+// -------------------- afficher les cartes cliquables dans les paramètres -----------------------------
 
 const alienCardContainer = document.querySelector("#alien-card-container");
 drawCard(alienCardContainer, "aliens", ["reward", "speed"]);
+
+const shipCardContainer = document.querySelector("#ship-card-container");
+drawCard(shipCardContainer, "ships", ["reload"]);
+
+const missileCardContainer = document.querySelector("#missile-card-container");
+drawCard(missileCardContainer, "missiles", ["speed"]);
+
+const bgCardContainer = document.querySelector("#bg-card-container");
+drawCard(bgCardContainer, "backgrounds", ["title"]);
 
 // --------------------------------- affichage des cartes cliquables -----------------------------------
 
@@ -58,9 +70,9 @@ function drawCard(container, entity, specs) {
       "h-36",
       "border-2",
       "border-grey",
-      "p-4",
+      "p-1",
       "text-grey",
-      "text-xs",
+      "text-sm",
       "bg-card-grey",
       "flex",
       "flex-col",
@@ -74,15 +86,32 @@ function drawCard(container, entity, specs) {
     container.appendChild(card);
 
     // afficher l'image
-    const image = document.createElement("img");
-    image.src = element.imagePath;
+    const image = document.createElement("div");
+    image.classList.add(
+      "h-full",
+      "w-full",
+      "bg-[url('" + element.imagePath + "')]",
+      "bg-contain",
+      "bg-no-repeat",
+      "bg-center"
+    );
+    // spécificités selon l'entité
+    if (card.dataset.entity === "missiles") {
+      image.classList.add("rotate-45");
+    }
+    if (card.dataset.entity === "backgrounds") {
+      image.classList.replace("bg-contain", "bg-cover");
+    }
     card.appendChild(image);
 
     // afficher les specs
     const specsP = document.createElement("p");
 
     specs.forEach((spec) => {
-      specsP.innerHTML += spec + " : " + element[spec] + "<br>";
+      if (entity !== "backgrounds") {
+        specsP.innerHTML = capitalizeFirstLetter(spec) + " : ";
+      }
+      specsP.innerHTML += element[spec] + "<br>";
     });
     card.appendChild(specsP);
 
@@ -116,7 +145,7 @@ function makeCardUnavailable(card, requiredLevel) {
   background.classList.add(
     "absolute",
     "bg-black",
-    "opacity-30",
+    "opacity-50",
     "w-full",
     "h-full",
     "top-0",
@@ -134,7 +163,7 @@ function makeCardUnavailable(card, requiredLevel) {
     "left-1/2",
     "-translate-x-1/2",
     "-translate-y-1/2",
-    "text-5xl",
+    "text-7xl",
     "cursor-not-allowed"
   );
   card.appendChild(lock);
@@ -163,8 +192,10 @@ function makeCardAvailable(card) {
 
 function showSelectedCards() {
   const cards = document.querySelectorAll(".card");
+
   cards.forEach((card) => {
-    if (card.dataset.entityId === localStorage.getItem(card.dataset.entity)) {
+    const registeredId = retrieveEntityId(card.dataset.entity);
+    if (card.dataset.entityId === registeredId) {
       card.classList.replace("border-grey", "border-alien-green");
     } else {
       card.classList.replace("border-alien-green", "border-grey");
@@ -172,7 +203,21 @@ function showSelectedCards() {
   });
 }
 
+function updateBackground() {
+  const bgDiv = document.querySelector("#bg");
+  const bgSrc = getPlayerBackground();
+  bgDiv.style.backgroundImage = "url('" + bgSrc + "')";
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 // --------------------------------- gestion du localstorage ------------------------------------------
+
+function retrieveEntityId(entity) {
+  return localStorage.getItem(entity);
+}
 
 function getPlayerPoints() {
   return localStorage.getItem("playerPoints");
@@ -202,6 +247,7 @@ function registerPlayer() {
     localStorage.setItem("aliens", "1");
     localStorage.setItem("ships", "1");
     localStorage.setItem("missiles", "1");
+    localStorage.setItem("backgrounds", "1");
   }
 }
 
@@ -210,4 +256,17 @@ function addCardToPreferences(card) {
     localStorage.setItem(card.dataset.entity, card.dataset.entityId);
   }
   showSelectedCards();
+  if (card.dataset.entity === "backgrounds") {
+    updateBackground();
+  }
+}
+
+function getPlayerBackground() {
+  let bgSrc;
+  gameData.backgrounds.forEach((bg) => {
+    if (bg.id === parseInt(localStorage.getItem("backgrounds"))) {
+      bgSrc = bg.imagePath;
+    }
+  });
+  return bgSrc;
 }

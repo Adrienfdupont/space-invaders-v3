@@ -217,8 +217,8 @@ const gameData = {
     },
     {
       id: 3,
-      imagePath: "../public/images/backgrounds/eclipsed-planet.jpg",
-      title: "Eclipsed planet",
+      imagePath: "../public/images/backgrounds/solar-eclipse.jpg",
+      title: "Solar eclipse",
       levelId: 1,
     },
     {

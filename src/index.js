@@ -1,9 +1,6 @@
 "use strict";
 
-// ----------------------- inscrire le joueur s'il n'a pas encore joué -------------------------------
 registerPlayer();
-
-// ------------------------------------ afficher le décor --------------------------------------------
 
 updateBackground();
 
@@ -44,7 +41,7 @@ levelProgressionDivs.forEach((element) => {
 // -------------------- afficher les cartes cliquables dans les paramètres -----------------------------
 
 const alienCardContainer = document.querySelector("#alien-card-container");
-drawCard(alienCardContainer, "aliens", ["reward", "speed"]);
+drawCard(alienCardContainer, "aliens", ["reward"]);
 
 const shipCardContainer = document.querySelector("#ship-card-container");
 drawCard(shipCardContainer, "ships", ["reload"]);

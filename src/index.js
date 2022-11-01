@@ -2,7 +2,7 @@
 
 // inscrire le joueur s'il n'a pas encore joué
 registerPlayer();
-// localStorage.setItem("playerPoints", "500");
+localStorage.setItem("playerPoints", "500");
 
 // afficher et cacher les paramètres de jeu
 
@@ -41,56 +41,11 @@ levelProgressionDivs.forEach((element) => {
 // afficher les cartes cliquables d'aliens dans les paramètres
 
 const alienCardContainer = document.querySelector("#alien-card-container");
-drawCard(alienCardContainer, "aliens", "reward");
-
-// --------------------------------- gestion du localstorage ------------------------------------------
-
-function getPlayerPoints() {
-  return localStorage.getItem("playerPoints");
-}
-
-function getLevelPoints(level) {
-  for (const gameDataLevel of gameData.levels) {
-    if (gameDataLevel.id === level) {
-      return gameDataLevel.points;
-    }
-  }
-}
-
-function getPlayerLevel() {
-  let playerLevel = 1;
-  for (const gameDataLevel of gameData.levels) {
-    if (getPlayerPoints() >= gameDataLevel.points) {
-      playerLevel = gameDataLevel.id;
-    }
-  }
-  return playerLevel;
-}
-
-function registerPlayer() {
-  if (!localStorage.getItem("playerPoints")) {
-    localStorage.setItem("playerPoints", "0");
-    localStorage.setItem("aliens", "1");
-    localStorage.setItem("ships", "1");
-    localStorage.setItem("missiles", "1");
-  }
-}
-
-function addCardToPreferences(card) {
-  if (localStorage.getItem(card.dataset.entity) !== card.dataset.entityId) {
-    localStorage.setItem(card.dataset.entity, card.dataset.entityId);
-
-    const cards = document.querySelectorAll(".card");
-    cards.forEach((card) => {
-      showIfCardSelected(card);
-    });
-  }
-  console.log(localStorage.getItem(card.dataset.entity));
-}
+drawCard(alienCardContainer, "aliens", ["reward", "speed"]);
 
 // --------------------------------- affichage des cartes cliquables -----------------------------------
 
-function drawCard(container, entity, spec) {
+function drawCard(container, entity, specs) {
   let containerWidth = 0;
   gameData[entity].forEach((element) => {
     containerWidth += 155;
@@ -105,6 +60,7 @@ function drawCard(container, entity, spec) {
       "border-grey",
       "p-4",
       "text-grey",
+      "text-xs",
       "bg-card-grey",
       "flex",
       "flex-col",
@@ -123,9 +79,12 @@ function drawCard(container, entity, spec) {
     card.appendChild(image);
 
     // afficher les specs
-    const specs = document.createElement("span");
-    specs.innerHTML = spec + " : " + element[spec];
-    card.appendChild(specs);
+    const specsP = document.createElement("p");
+
+    specs.forEach((spec) => {
+      specsP.innerHTML += spec + " : " + element[spec] + "<br>";
+    });
+    card.appendChild(specsP);
 
     // indiquer si la carte est sélectionnable
     const requiredLevel = getRequiredLevel(card);
@@ -136,19 +95,9 @@ function drawCard(container, entity, spec) {
     }
 
     // indiquer si utilisé par le joueur
-    showIfCardSelected(card);
-
-    // ajouter aux préférences du joueur sur clique
+    showSelectedCards();
   });
   container.style.width = containerWidth + "px";
-}
-
-function showIfCardSelected(card) {
-  if (card.dataset.entityId === localStorage.getItem(card.dataset.entity)) {
-    card.classList.replace("border-grey", "border-alien-green");
-  } else {
-    card.classList.replace("border-alien-green", "border-grey");
-  }
 }
 
 function getRequiredLevel(card) {
@@ -210,4 +159,55 @@ function makeCardAvailable(card) {
   card.onclick = () => {
     addCardToPreferences(card);
   };
+}
+
+function showSelectedCards() {
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card) => {
+    if (card.dataset.entityId === localStorage.getItem(card.dataset.entity)) {
+      card.classList.replace("border-grey", "border-alien-green");
+    } else {
+      card.classList.replace("border-alien-green", "border-grey");
+    }
+  });
+}
+
+// --------------------------------- gestion du localstorage ------------------------------------------
+
+function getPlayerPoints() {
+  return localStorage.getItem("playerPoints");
+}
+
+function getLevelPoints(level) {
+  for (const gameDataLevel of gameData.levels) {
+    if (gameDataLevel.id === level) {
+      return gameDataLevel.points;
+    }
+  }
+}
+
+function getPlayerLevel() {
+  let playerLevel = 1;
+  for (const gameDataLevel of gameData.levels) {
+    if (getPlayerPoints() >= gameDataLevel.points) {
+      playerLevel = gameDataLevel.id;
+    }
+  }
+  return playerLevel;
+}
+
+function registerPlayer() {
+  if (!localStorage.getItem("playerPoints")) {
+    localStorage.setItem("playerPoints", "0");
+    localStorage.setItem("aliens", "1");
+    localStorage.setItem("ships", "1");
+    localStorage.setItem("missiles", "1");
+  }
+}
+
+function addCardToPreferences(card) {
+  if (localStorage.getItem(card.dataset.entity) !== card.dataset.entityId) {
+    localStorage.setItem(card.dataset.entity, card.dataset.entityId);
+  }
+  showSelectedCards();
 }

@@ -2,14 +2,11 @@ class Alien extends Entity {
   static instances = [];
 
   constructor(imgPath, width, height, left, bottom, speed, reloadTime) {
-    super(imgPath, width, height, left, bottom);
+    super(playerData.alien.imgPath, width, height, left, bottom);
 
     this.speed = speed;
     this.reloadTime = reloadTime;
     Alien.instances.push(this);
-  }
-
-  initAction() {
     this.animation = requestAnimationFrame(() => this.moveRight());
     this.shot = setInterval(() => {
       this.shoot();

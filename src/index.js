@@ -1,39 +1,42 @@
 "use strict";
 
+var playerData;
 registerPlayer();
 
 updateBackground();
 
+const shipImg = document.querySelector("#ship");
+shipImg.src = playerData.alien.image.path;
+
 // --------------------------- afficher et cacher les paramètres de jeu -------------------------------
 
 const openButton = document.querySelector("#open-button");
-const closeButton = document.querySelector("#close-button");
 const settingsDiv = document.querySelector("#settings");
-
 openButton.onclick = () => {
   settingsDiv.classList.replace("translate-x-full", "translate-x-0");
 };
+
+const closeButton = document.querySelector("#close-button");
 closeButton.onclick = () => {
   settingsDiv.classList.replace("translate-x-0", "translate-x-full");
 };
 
 // ---------------- afficher le niveau du joueur et sa progression dans le niveau ---------------------
 
-const levelSpans = document.querySelectorAll(".level");
-const levelProgressionDivs = document.querySelectorAll(".level-progression");
-
-const playerLevel = getPlayerLevel();
-const playerPoints = getPlayerPoints();
-const currentLevelPoints = getLevelPoints(playerLevel);
-const nextLevelPoints = getLevelPoints(playerLevel + 1);
+const playerLevel = playerData.level.id;
+const playerPoints = playerData.points;
+const currentLevelPoints = playerData.level.points;
+const nextLevelPoints = gameData.levels[playerLevel].points;
 const progressValue =
   (100 * (playerPoints - currentLevelPoints)) /
   (nextLevelPoints - currentLevelPoints);
 
+const levelSpans = document.querySelectorAll(".level");
 levelSpans.forEach((element) => {
   element.innerHTML = "Level " + playerLevel;
 });
 
+const levelProgressionDivs = document.querySelectorAll(".level-progression");
 levelProgressionDivs.forEach((element) => {
   element.style.width = progressValue + "%";
 });
@@ -41,22 +44,22 @@ levelProgressionDivs.forEach((element) => {
 // -------------------- afficher les cartes cliquables dans les paramètres -----------------------------
 
 const alienCardContainer = document.querySelector("#alien-card-container");
-drawCard(alienCardContainer, "aliens", ["reward"]);
+drawCard(alienCardContainer, "alien", ["reward"]);
 
 const shipCardContainer = document.querySelector("#ship-card-container");
-drawCard(shipCardContainer, "ships", ["reload"]);
+drawCard(shipCardContainer, "ship", ["reload"]);
 
 const missileCardContainer = document.querySelector("#missile-card-container");
-drawCard(missileCardContainer, "missiles", ["speed"]);
+drawCard(missileCardContainer, "missile", ["speed"]);
 
 const bgCardContainer = document.querySelector("#bg-card-container");
-drawCard(bgCardContainer, "backgrounds", ["title"]);
+drawCard(bgCardContainer, "background", ["title"]);
 
 // --------------------------------- affichage des cartes cliquables -----------------------------------
 
 function drawCard(container, entity, specs) {
   let containerWidth = 0;
-  gameData[entity].forEach((element) => {
+  gameData[entity + "s"].forEach((element) => {
     containerWidth += 155;
 
     // afficher la carte
@@ -87,16 +90,16 @@ function drawCard(container, entity, specs) {
     image.classList.add(
       "h-full",
       "w-full",
-      "bg-[url('" + element.imagePath + "')]",
+      "bg-[url('" + element.image.path + "')]",
       "bg-contain",
       "bg-no-repeat",
       "bg-center"
     );
     // spécificités selon l'entité
-    if (card.dataset.entity === "missiles") {
+    if (entity === "missile") {
       image.classList.add("rotate-45");
     }
-    if (card.dataset.entity === "backgrounds") {
+    if (entity === "background") {
       image.classList.replace("bg-contain", "bg-cover");
     }
     card.appendChild(image);
@@ -105,7 +108,7 @@ function drawCard(container, entity, specs) {
     const specsP = document.createElement("p");
 
     specs.forEach((spec) => {
-      if (entity !== "backgrounds") {
+      if (entity !== "background") {
         specsP.innerHTML = capitalizeFirstLetter(spec) + " : ";
       }
       specsP.innerHTML += element[spec] + "<br>";
@@ -113,27 +116,20 @@ function drawCard(container, entity, specs) {
     card.appendChild(specsP);
 
     // indiquer si la carte est sélectionnable
-    const requiredLevel = getRequiredLevel(card);
-    if (requiredLevel > getPlayerLevel()) {
-      makeCardUnavailable(card, requiredLevel);
-    } else {
-      makeCardAvailable(card);
-    }
+    isCardAvailable(card, element);
 
     // indiquer si utilisé par le joueur
-    showSelectedCards();
+    isCardSelected(card);
   });
   container.style.width = containerWidth + "px";
 }
 
-function getRequiredLevel(card) {
-  let requiredLevel;
-  gameData[card.dataset.entity].forEach((element) => {
-    if (element.id === parseInt(card.dataset.entityId)) {
-      requiredLevel = element.levelId;
-    }
-  });
-  return requiredLevel;
+function isCardAvailable(card, arrayElement) {
+  if (arrayElement.levelId > playerData.level.id) {
+    makeCardUnavailable(card, arrayElement.levelId);
+  } else {
+    makeCardAvailable(card);
+  }
 }
 
 function makeCardUnavailable(card, requiredLevel) {
@@ -145,8 +141,7 @@ function makeCardUnavailable(card, requiredLevel) {
     "opacity-50",
     "w-full",
     "h-full",
-    "top-0",
-    "cursor-not-allowed"
+    "top-0"
   );
   card.appendChild(background);
 
@@ -161,7 +156,7 @@ function makeCardUnavailable(card, requiredLevel) {
     "-translate-x-1/2",
     "-translate-y-1/2",
     "text-7xl",
-    "cursor-not-allowed"
+    "cursor-default"
   );
   card.appendChild(lock);
 
@@ -175,7 +170,7 @@ function makeCardUnavailable(card, requiredLevel) {
     "-translate-x-1/2",
     "-translate-y-1/2",
     "text-white",
-    "cursor-not-allowed"
+    "cursor-default"
   );
   card.appendChild(level);
 }
@@ -187,22 +182,17 @@ function makeCardAvailable(card) {
   };
 }
 
-function showSelectedCards() {
-  const cards = document.querySelectorAll(".card");
-
-  cards.forEach((card) => {
-    const registeredId = retrieveEntityId(card.dataset.entity);
-    if (card.dataset.entityId === registeredId) {
-      card.classList.replace("border-grey", "border-alien-green");
-    } else {
-      card.classList.replace("border-alien-green", "border-grey");
-    }
-  });
+function isCardSelected(card) {
+  if (parseInt(card.dataset.entityId) === playerData[card.dataset.entity].id) {
+    card.classList.replace("border-grey", "border-alien-green");
+  } else {
+    card.classList.replace("border-alien-green", "border-grey");
+  }
 }
 
 function updateBackground() {
   const bgDiv = document.querySelector("#bg");
-  const bgSrc = getPlayerBackground();
+  const bgSrc = playerData.background.image.path;
   bgDiv.style.backgroundImage = "url('" + bgSrc + "')";
 }
 
@@ -212,58 +202,43 @@ function capitalizeFirstLetter(string) {
 
 // --------------------------------- gestion du localstorage ------------------------------------------
 
-function retrieveEntityId(entity) {
-  return localStorage.getItem(entity);
-}
-
-function getPlayerPoints() {
-  return localStorage.getItem("playerPoints");
-}
-
-function getLevelPoints(level) {
-  for (const gameDataLevel of gameData.levels) {
-    if (gameDataLevel.id === level) {
-      return gameDataLevel.points;
-    }
-  }
-}
-
-function getPlayerLevel() {
-  let playerLevel = 1;
-  for (const gameDataLevel of gameData.levels) {
-    if (getPlayerPoints() >= gameDataLevel.points) {
-      playerLevel = gameDataLevel.id;
-    }
-  }
-  return playerLevel;
-}
-
 function registerPlayer() {
-  if (!localStorage.getItem("playerPoints")) {
-    localStorage.setItem("playerPoints", "0");
-    localStorage.setItem("aliens", "1");
-    localStorage.setItem("ships", "1");
-    localStorage.setItem("missiles", "1");
-    localStorage.setItem("backgrounds", "1");
+  if (!localStorage["playerData"]) {
+    playerData = {
+      points: 0,
+      level: gameData.levels[0],
+      alien: gameData.aliens[0],
+      ship: gameData.ships[0],
+      missile: gameData.missiles[0],
+      background: gameData.backgrounds[0],
+    };
+    savePlayerData();
+  } else {
+    playerData = JSON.parse(localStorage["playerData"]);
   }
 }
 
 function addCardToPreferences(card) {
-  if (localStorage.getItem(card.dataset.entity) !== card.dataset.entityId) {
-    localStorage.setItem(card.dataset.entity, card.dataset.entityId);
+  const entity = card.dataset.entity;
+  const entityId = parseInt(card.dataset.entityId);
+  if (playerData[entity].id !== entityId) {
+    gameData[entity + "s"].forEach((element) => {
+      if (element.id === entityId) {
+        playerData[entity] = element;
+        savePlayerData();
+      }
+    });
   }
-  showSelectedCards();
-  if (card.dataset.entity === "backgrounds") {
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card) => {
+    isCardSelected(card);
+  });
+
+  if (entity === "background") {
     updateBackground();
   }
 }
 
-function getPlayerBackground() {
-  let bgSrc;
-  gameData.backgrounds.forEach((bg) => {
-    if (bg.id === parseInt(localStorage.getItem("backgrounds"))) {
-      bgSrc = bg.imagePath;
-    }
-  });
-  return bgSrc;
+function savePlayerData() {
+  localStorage["playerData"] = JSON.stringify(playerData);
 }

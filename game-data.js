@@ -57,7 +57,11 @@ const gameData = {
       speed: 1,
       reload: 20000,
       reward: 10,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 1,
     },
 
@@ -66,7 +70,11 @@ const gameData = {
       speed: 1.1,
       reload: 19000,
       reward: 12,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 2,
     },
 
@@ -75,7 +83,11 @@ const gameData = {
       speed: 1.2,
       reload: 18000,
       reward: 15,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 3,
     },
 
@@ -84,7 +96,11 @@ const gameData = {
       speed: 1.3,
       reload: 17000,
       reward: 19,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 4,
     },
 
@@ -93,7 +109,11 @@ const gameData = {
       speed: 1.4,
       reload: 16000,
       reward: 24,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 5,
     },
 
@@ -102,7 +122,11 @@ const gameData = {
       speed: 1.5,
       reload: 15000,
       reward: 29,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 6,
     },
 
@@ -111,7 +135,11 @@ const gameData = {
       speed: 1.6,
       reload: 14000,
       reward: 36,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 7,
     },
 
@@ -120,7 +148,11 @@ const gameData = {
       speed: 1.7,
       reload: 13000,
       reward: 43,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 8,
     },
 
@@ -129,7 +161,11 @@ const gameData = {
       speed: 1.8,
       reload: 12000,
       reward: 52,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 9,
     },
 
@@ -138,7 +174,11 @@ const gameData = {
       speed: 1.9,
       reload: 11000,
       reward: 65,
-      imagePath: "../public/images/aliens/alien.png",
+      image: {
+        path: "../public/images/aliens/alien.png",
+        width: 50,
+        height: 37,
+      },
       levelId: 10,
     },
   ],
@@ -146,35 +186,45 @@ const gameData = {
   ships: [
     {
       id: 1,
-      imagePath: "../public/images/ships/ship-lv1.png",
+      image: {
+        path: "../public/images/ships/ship-lv1.png",
+      },
       reload: 2000,
       levelId: 1,
     },
 
     {
       id: 2,
-      imagePath: "../public/images/ships/ship-lv2.png",
+      image: {
+        path: "../public/images/ships/ship-lv2.png",
+      },
       reload: 1800,
       levelId: 3,
     },
 
     {
       id: 3,
-      imagePath: "../public/images/ships/ship-lv3.png",
+      image: {
+        path: "../public/images/ships/ship-lv3.png",
+      },
       reload: 1600,
       levelId: 5,
     },
 
     {
       id: 4,
-      imagePath: "../public/images/ships/ship-lv4.png",
+      image: {
+        path: "../public/images/ships/ship-lv4.png",
+      },
       reload: 1400,
       levelId: 7,
     },
 
     {
       id: 5,
-      imagePath: "../public/images/ships/ship-lv5.png",
+      image: {
+        path: "../public/images/ships/ship-lv5.png",
+      },
       reload: 1200,
       levelId: 9,
     },
@@ -183,21 +233,27 @@ const gameData = {
   missiles: [
     {
       id: 1,
-      imagePath: "../public/images/missiles/missile-lv1.png",
+      image: {
+        path: "../public/images/missiles/missile-lv1.png",
+      },
       speed: 0.4,
       levelId: 1,
     },
 
     {
       id: 2,
-      imagePath: "../public/images/missiles/missile-lv2.png",
+      image: {
+        path: "../public/images/missiles/missile-lv2.png",
+      },
       speed: 0.5,
       levelId: 5,
     },
 
     {
       id: 3,
-      imagePath: "../public/images/missiles/missile-lv3.png",
+      image: {
+        path: "../public/images/missiles/missile-lv3.png",
+      },
       speed: 0.6,
       levelId: 9,
     },
@@ -205,43 +261,57 @@ const gameData = {
   backgrounds: [
     {
       id: 1,
-      imagePath: "../public/images/backgrounds/earth-system.jpg",
+      image: {
+        path: "../public/images/backgrounds/earth-system.jpg",
+      },
       title: "Earth system",
       levelId: 1,
     },
     {
       id: 2,
-      imagePath: "../public/images/backgrounds/alongside-voyager.jpg",
+      image: {
+        path: "../public/images/backgrounds/alongside-voyager.jpg",
+      },
       title: "Alongside Voyager",
       levelId: 1,
     },
     {
       id: 3,
-      imagePath: "../public/images/backgrounds/solar-eclipse.jpg",
+      image: {
+        path: "../public/images/backgrounds/solar-eclipse.jpg",
+      },
       title: "Solar eclipse",
       levelId: 1,
     },
     {
       id: 4,
-      imagePath: "../public/images/backgrounds/ice-belt.jpg",
+      image: {
+        path: "../public/images/backgrounds/ice-belt.jpg",
+      },
       title: "Ice belt",
       levelId: 1,
     },
     {
       id: 5,
-      imagePath: "../public/images/backgrounds/inhabited-planet.jpg",
+      image: {
+        path: "../public/images/backgrounds/inhabited-planet.jpg",
+      },
       title: "Inhabited planet",
       levelId: 1,
     },
     {
       id: 6,
-      imagePath: "../public/images/backgrounds/interstellar-cloud.jpg",
+      image: {
+        path: "../public/images/backgrounds/interstellar-cloud.jpg",
+      },
       title: "Interstellar cloud",
       levelId: 1,
     },
     {
       id: 7,
-      imagePath: "../public/images/backgrounds/rock-belt.jpg",
+      image: {
+        path: "../public/images/backgrounds/rock-belt.jpg",
+      },
       title: "Rock belt",
       levelId: 1,
     },
